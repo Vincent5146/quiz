@@ -9,7 +9,7 @@ const props = defineProps({
 });
 const emit = defineEmits(["changeShowQuantity"]);
 
-const showQuantity =ref(store.$state.showQuantity);
+const showQuantity = ref(store.$state.showQuantity);
 const currentTab = computed(() => store.$state.showTab);
 const selectOptions = ref([{ value: 10 }, { value: 30 }, { value: 50 }]);
 
@@ -21,13 +21,6 @@ const changeQuantity = () => {
 const changeTab = (value) => {
   store.$state.showTab = value;
 };
-
-// watch(
-//   () => store.$state.showQuantity,
-//   (value) => {
-//     showQuantity.value = value;
-//   }
-// );
 </script>
 
 <template lang="pug">
