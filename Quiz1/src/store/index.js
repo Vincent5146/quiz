@@ -5,6 +5,8 @@ export const useRootStore = defineStore("rootStore", {
     state: () => {
         return {
             loading: true,
+            showQuantity: 10,
+            showTab: "All",
             peopleData: [],
             favoriteData: [],
         };
@@ -12,12 +14,15 @@ export const useRootStore = defineStore("rootStore", {
     getters: {},
     actions: {
         getPeopleData() {
-            axios
-                .get(`https://randomuser.me/api/?results=3010`)
-                .then((response) => {
-                    this.peopleData = response.data.results;
-                    this.loading = false;
-                });
+            let data = JSON.parse(sessionStorage.getItem("rootStore"));
+            if (!data) {
+                axios
+                    .get(`https://randomuser.me/api/?results=3010`)
+                    .then((response) => {
+                        this.peopleData = response.data.results;
+                        this.loading = false;
+                    });
+            }
         },
         checkFavorite(person) {
             const index = this.favoriteData.findIndex(item => item.cell === person.cell)
@@ -28,4 +33,7 @@ export const useRootStore = defineStore("rootStore", {
             }
         }
     },
+    persist: {
+        enabled: true
+    }
 });

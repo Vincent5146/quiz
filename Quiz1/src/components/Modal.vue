@@ -12,7 +12,6 @@ const openModal = (value) => {
   open.value = value;
   emit("openModal", open.value);
 };
-console.log(props.person)
 </script>
 
 <template lang="pug">

@@ -13,8 +13,8 @@ const pageData = ref([]); // 當前頁面顯示的資料
 const currentPage = ref(1); // 當前頁面No.
 
 const totalDataLength = ref(3010); // 總資料數量
-const showQuantity = ref(10); // 當前單頁的顯示數量
-const showTab = ref("All"); // 當前顯示的Tab
+const showQuantity = ref(store.$state.showQuantity); // 當前單頁的顯示數量
+const showTab = computed(() => store.$state.showTab);; // 當前顯示的Tab
 
 // 切換頁數滑動至頂
 const content = ref(null);
@@ -67,9 +67,9 @@ onMounted(async () => {
 });
 watch(
   [
-    () => showQuantity.value,
     () => currentPage.value,
-    () => showTab.value,
+    () => store.$state.showQuantity,
+    () => store.$state.showTab,
     () => store.$state.peopleData,
     () => store.$state.favoriteData,
   ],
@@ -84,7 +84,6 @@ watch(
 .flex.flex-col.items-center(ref="content")
   Navbar(
     :showQuantity="showQuantity",
-    @changeShowTab="changeShowTab",
     @changeShowQuantity="changeShowQuantity"
   )
   .p-10.grid.grid-cols-1.gap-5.w-screen.bg-amber-200(

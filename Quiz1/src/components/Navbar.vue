@@ -1,29 +1,33 @@
 <script setup>
-import { defineProps, defineEmits, ref, watch } from "vue";
+import { defineProps, defineEmits, ref, watch, computed } from "vue";
+import { useRootStore } from "../store/index.js";
+
+const store = useRootStore();
 
 const props = defineProps({
   showQuantity: Number,
 });
-const emit = defineEmits(["changeShowQuantity", "changeShowTab"]);
+const emit = defineEmits(["changeShowQuantity"]);
 
-const showQuantity = ref(props.showQuantity);
-const currentTab = ref("All");
+const showQuantity =ref(store.$state.showQuantity);
+const currentTab = computed(() => store.$state.showTab);
 const selectOptions = ref([{ value: 10 }, { value: 30 }, { value: 50 }]);
 
 const changeQuantity = () => {
-  emit("changeShowQuantity", showQuantity.value);
+  store.$state.showQuantity = showQuantity.value;
+  console.log(store.$state.showQuantity)
+  emit("changeShowQuantity", store.$state.showQuantity);
 };
 const changeTab = (value) => {
-  currentTab.value = value;
-  emit("changeShowTab", currentTab.value);
+  store.$state.showTab = value;
 };
 
-watch(
-  () => props.showQuantity,
-  (value) => {
-    showQuantity.value = value;
-  }
-);
+// watch(
+//   () => store.$state.showQuantity,
+//   (value) => {
+//     showQuantity.value = value;
+//   }
+// );
 </script>
 
 <template lang="pug">
