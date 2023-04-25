@@ -21,6 +21,9 @@ const changeQuantity = () => {
 const changeTab = (value) => {
   store.$state.showTab = value;
 };
+const changeMode = (value) => {
+  store.$state.showMode = value;
+};
 </script>
 
 <template lang="pug">
@@ -46,6 +49,6 @@ const changeTab = (value) => {
       @click="changeQuantity"
     )
       option(v-for="option in selectOptions", :value="option.value") {{ option.value }}
-    .w-5.h-5.bg-pink-400
-    .w-5.h-5.bg-pink-200
+    .w-5.h-5.bg-pink-400(@click="changeMode('Card')")
+    .w-5.h-5.bg-pink-200(@click="changeMode('List')")
 </template>

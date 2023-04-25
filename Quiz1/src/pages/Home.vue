@@ -13,8 +13,9 @@ const pageData = ref([]); // 當前頁面顯示的資料
 const currentPage = ref(1); // 當前頁面No.
 
 const totalDataLength = ref(3010); // 總資料數量
+const showMode = computed(() => store.$state.showMode); // 當前顯示樣式Card or List
 const showQuantity = ref(store.$state.showQuantity); // 當前單頁的顯示數量
-const showTab = computed(() => store.$state.showTab);; // 當前顯示的Tab
+const showTab = computed(() => store.$state.showTab); // 當前顯示的Tab
 
 // 切換頁數滑動至頂
 const content = ref(null);
@@ -68,6 +69,7 @@ onMounted(async () => {
 watch(
   [
     () => currentPage.value,
+    () => store.$state.showMode,
     () => store.$state.showQuantity,
     () => store.$state.showTab,
     () => store.$state.peopleData,
@@ -87,13 +89,26 @@ watch(
     @changeShowQuantity="changeShowQuantity"
   )
   .p-10.grid.grid-cols-1.gap-5.w-screen.bg-amber-200(
-    v-if="store.$state.loading",
-    class="sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5"
+    v-if="store.$state.loading"
   ) loading...
   .p-10.grid.grid-cols-1.gap-5.w-screen.bg-amber-200(
-    v-else,
+    v-else-if="showMode === 'Card'",
     class="sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5"
   )
+    Card(v-for="(person, index) in pageData", :key="person", :person="person")
+  .p-10.w-screen.bg-amber-200(v-else-if="showMode === 'List'")
+    .flex.items-center.px-5.py-2
+      span.text-center(class="w-1/5") 
+      span(class="w-1/2")
+        span.text-xs.uppercase.text-gray-600.font-bold Contact Info
+      span(class="w-1/4")
+        span.text-xs.uppercase.text-gray-600.font-bold Gender
+      span(class="w-1/4")
+        span.text-xs.uppercase.text-gray-600.font-bold City
+      span(class="w-1/4")
+        span.text-xs.uppercase.text-gray-600.font-bold Phone
+      span(class="w-1/4")
+        span.text-xs.uppercase.text-gray-600.font-bold Created At
     Card(v-for="(person, index) in pageData", :key="person", :person="person")
   vue-awesome-paginate.pt-2(
     :total-items="totalDataLength",

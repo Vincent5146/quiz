@@ -5,6 +5,7 @@ export const useRootStore = defineStore("rootStore", {
     state: () => {
         return {
             loading: true,
+            showMode: "List",
             showQuantity: 10,
             showTab: "All",
             peopleData: [],
