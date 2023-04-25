@@ -74,6 +74,8 @@ div(@click.stop="showModal")
       span.text-gray-600.text-sm {{ props.person.phone }}
     div(class="w-1/4")
       span.text-gray-600.text-sm {{ props.person.registered.date.split("T")[0] }}
+    button.text-red-500(class="hover:text-red-600", @click="checkFavorite")
+      i(:class="isFavorite ? 'fas fa-heart' : 'far fa-heart'")
 card-modal(
   v-if="open",
   :open="open",

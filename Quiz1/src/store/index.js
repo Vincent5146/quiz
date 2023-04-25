@@ -7,7 +7,6 @@ export const useRootStore = defineStore("rootStore", {
             loading: true,
             showMode: "List",
             showQuantity: 10,
-            showTab: "All",
             peopleData: [],
             favoriteData: [],
         };

@@ -7,12 +7,12 @@ const routes = [
     component: () =>
       import("../pages/Home.vue"),
   },
-  // {
-  //   path: "/Card",
-  //   name: "card",
-  //   component: () =>
-  //     import("../pages/Card.vue"),
-  // },
+  {
+    path: "/favorite",
+    name: "favorite",
+    component: () =>
+      import("../pages/Favorite.vue"),
+  },
 ];
 
 const router = createRouter({

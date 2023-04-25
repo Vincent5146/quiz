@@ -6,7 +6,6 @@ import { useRootStore } from "../store/index.js";
 
 const store = useRootStore();
 
-const peopleData = computed(() => store.$state.peopleData); // 原始資料
 const favoriteData = computed(() => store.$state.favoriteData); // 原始資料
 
 const pageData = ref([]); // 當前頁面顯示的資料
@@ -28,12 +27,19 @@ const changeShowQuantity = (value) => {
 // 畫面資料渲染
 const filterPageData = () => {
   pageData.value = [];
-  totalDataLength.value = peopleData.value.length;
+  if (favoriteData.value.length > 0) {
+    totalDataLength.value = favoriteData.value.length;
+  } else {
+    totalDataLength.value = 1;
+  }
   if (currentPage.value === 1) {
-    pageData.value = peopleData.value.slice(0, 0 + showQuantity.value);
+    pageData.value = favoriteData.value.slice(0, 0 + showQuantity.value);
   } else {
     let index = (currentPage.value - 1) * showQuantity.value;
-    pageData.value = peopleData.value.slice(index, index + showQuantity.value);
+    pageData.value = favoriteData.value.slice(
+      index,
+      index + showQuantity.value
+    );
   }
   scrollToTop();
 };
@@ -72,6 +78,7 @@ watch(
     Card(v-for="(person, index) in pageData", :key="person", :person="person")
   .p-10.w-screen.bg-amber-200(v-else-if="showMode === 'List'")
     .flex.items-center.px-5.py-2
+      span.text-center(class="w-1/5") 
       span(class="w-1/2")
         span.text-xs.uppercase.text-gray-600.font-bold Contact Info
       span(class="w-1/4")
