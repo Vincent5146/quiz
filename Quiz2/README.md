@@ -1,5 +1,7 @@
 # Quiz2
 
+Live Demo: https://inquisitive-queijadas-43146a.netlify.app/
+
 先確認資料夾路徑是否如下
 以桌面為例  \Desktop\quiz\Quiz2> 
 確認後再依序輸入下列指令，即可啟動專案
